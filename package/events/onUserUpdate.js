@@ -52,4 +52,4 @@ const userUpdate = async (client, oldUser, newUser) => {
     })
 }
 
-module.exports = userUpdate;
+module.exports = userUpdate; 
