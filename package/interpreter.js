@@ -109,7 +109,7 @@ const interpreter = async (client, message, args, name, code, ops) => {
     }
 };
 
-module.exports = interpreter; 
+module.exports = interpreter;
 
 
 String.prototype.replaceLast = function (what, replacement) {
