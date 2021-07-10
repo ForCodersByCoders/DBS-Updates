@@ -1,0 +1,64 @@
+{
+  "_from": "discordbot-script@latest",
+  "_id": "discordbot-script@3.1.0",
+  "_inBundle": false,
+  "_integrity": "sha512-jw93INjZGea9dZhJMKWLPaKQK80YiTyJa0S8qtzvTTleRKSev9b4QQ1XTyRlhoQA5RkFHzZNXXz6PO/H5OPspw==",
+  "_location": "/discordbot-script",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "discordbot-script@latest",
+    "name": "discordbot-script",
+    "escapedName": "discordbot-script",
+    "rawSpec": "latest",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/discordbot-script/-/discordbot-script-3.1.0.tgz",
+  "_shasum": "7983a3d69eda1c61753f605ef58d88c83b00721a",
+  "_spec": "discordbot-script@latest",
+  "_where": "C:\\Users\\inspi\\OneDrive\\Desktop\\DB-Script\\Updates",
+  "author": {
+    "name": "Speshul"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "@vitalets/google-translate-api": "3.0.0",
+    "chalk": "^4.1.1",
+    "discord.js": "~12.2.0",
+    "humanize-duration": "^3.27.0",
+    "moment": "2.27.0",
+    "ms": "2.1.2",
+    "node-fetch": "2.6.0",
+    "parse-ms": "2.1.0",
+    "quick.db": "~7.1.1"
+  },
+  "deprecated": false,
+  "description": "DiscordBot-Script is a powerful Discord.js framework allowing you to easily interact with the DiscordAPI.",
+  "keywords": [
+    "api",
+    "discord",
+    "bdfd",
+    "bot designer for discord",
+    "bot",
+    "dbd",
+    "dbs",
+    "db-script",
+    "discordbot-script",
+    "dbscript",
+    "discordapi"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "discordbot-script",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node index.js"
+  },
+  "version": "3.1.0"
+}
