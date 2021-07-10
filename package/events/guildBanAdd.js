@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+ const Discord = require('discord.js')
 
 const edit = require('discordbot-script/package/bot/edit')
 
