@@ -11,6 +11,10 @@ const repeat = async (client, message, args, name, code) => {
     if (!n) return message.channel.send(`:x: Missing content in 2nd field of \`$repeat[${inside}]\`.\n${docs.action}/repeat`)
     if (!text) return message.channel.send(`:x: Missing content in 2nd field of \`$repeat[${inside}]\`.\n${docs.action}/repeat`)
 
+    if (text.repeat(n).length >= 2000) {
+        return message.channel.send(`:x: \`$repeat\` has exceeded the character limit by \`${text.repeat(n).length - 2000}\` characters, try an output smaller than 2000!\n${docs.action}/repeat`)
+    }
+
     code = code.replaceLast(`$repeat[${inside}]`, text.repeat(n))
 
     return {
