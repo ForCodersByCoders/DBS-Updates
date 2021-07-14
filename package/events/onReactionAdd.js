@@ -8,6 +8,10 @@ const delete_ = require('discordbot-script/package/bot/delete')
 const onReactionAdd = async (client, reaction, user) => {
 
     client.reactionAdd.map(async command => {
+        
+        if (reaction.message.partial) reaction.message.fetch();
+        if (reaction.partial) reaction.fetch();
+        
         guild = reaction.message.guild
         let member = { guild, user }
 
