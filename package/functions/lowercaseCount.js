@@ -4,7 +4,7 @@ const lowercaseCount = async (client, message, args, name, code) => {
 
     let result;
     if (!inside) {
-        result = "undefined"
+        result = "0"
     } else {
         result = inside.match(/[a-z]/g).length
     }
