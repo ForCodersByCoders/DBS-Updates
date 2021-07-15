@@ -13,7 +13,7 @@ const disconnect = async (client, message, args, name, code) => {
 
         let err = client.suppress.get(message.idd)
 
-        let queue = client.queue.get(message.guild.id)
+        let queue = client.queue.get(guild)
 
         if (!queue) {
             let queueConnection = (queue ? true : false)
@@ -21,7 +21,7 @@ const disconnect = async (client, message, args, name, code) => {
                 return message.channel.send(`Error \`$disconnect\`: ${docs.music}/disconnect\n${client.user.tag} is not in a voice channel in ${guild.name} **Catch with \`$voiceID[$client]\`**!`)
             } else {
                 let queueChannel = queue.connection.channel
-                client.queue.delete(message.guild.id)
+                client.queue.delete(guild)
                 await queueChannel.leave();
             }
         }
