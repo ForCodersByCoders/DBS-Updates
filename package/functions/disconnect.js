@@ -2,61 +2,55 @@ const { docs } = require("../functions/docs/docs.json");
 
 const disconnect = async (client, message, args, name, code) => {
 
-    const r = code.split("$disconnect[").length - 1
+    const r = code.split("$disconnect").length - 1
 
-    let inside = code.split("$disconnect[")[r].split("]")[0]
+    if (code.split("$disconnect")[r].startsWith("[")) {
 
-    if (!inside) return message.channel.send(`:x: Invalid channel ID in \`$disconnect[${inside}]\`.\n${docs.music}/disconnect`)
+        let inside = code.split("$disconnect[")[r].split("]")[0]
+        let id = (inside ? inside : message.guild.id)
+        let guild = client.guilds.cache.get(id)
+        if (!guild) return message.channel.send(`Error \`$disconnect\`: ${docs.music}/disconnect\nInvalid guild ID! Leave empty to define this guild!`)
 
-    let channel = client.channels.cache.get(inside || message.channel.id)
+        let err = client.suppress.get(message.idd)
 
-    if (client.queue.get(message.guild.id)) {
-        try {
-            if (channel !== client.queue.get(message.guild.id).connection.channel)
-                return message.channel.send(`:x: ${client.user.tag} is not in that voice channel.\n${docs.music}/disconnect`)
-        } catch {
-            return message.channel.send(`:x: Something happened when attempting to disconnect....\n${docs.music}/disconnect`)
+        let queue = client.queue.get(message.guild.id)
+
+        if (!queue) {
+            let queueConnection = (queue ? true : false)
+            if (queueConnection === false) {
+                return message.channel.send(`Error \`$disconnect\`: ${docs.music}/disconnect\n${client.user.tag} is not in a voice channel in ${guild.name} **Catch with \`$voiceID[$client]\`**!`)
+            } else {
+                let queueChannel = queue.connection.channel
+                client.queue.delete(message.guild.id)
+                await queueChannel.leave();
+            }
         }
-        client.queue.delete(message.guild.id)
-        await channel.leave();
+
+        code = code.replaceLast(`$disconnect[${inside}]`, "")
+
+        return {
+            code: code,
+        }
+    } else {
+        let queue = client.queue.get(message.guild.id)
+
+        if (!queue) {
+            let queueConnection = (queue ? true : false)
+            if (queueConnection === false) {
+                return message.channel.send(`Error \`$disconnect\`: ${docs.music}/disconnect\n${client.user.tag} is not in a voice channel. **Catch with \`$voiceID[$client]\`**!`)
+            }
+        } else {
+            let queueChannel = queue.connection.channel
+            client.queue.delete(message.guild.id)
+            await queueChannel.leave();
+        }
     }
 
 
-    code = code.replaceLast(`$disconnect[${inside}]`, "")
+    code = code.replaceLast("$disconnect", "")
 
     return {
         code: code
     }
 }
 module.exports = disconnect;
-
-
-
-
-
-// const { docs } = require("../functions/docs/docs.json");
-
-// const disconnect = async (client, message, args, name, code) => {
-
-//     // let channel = client.channels.cache.get(inside || message.channel.id)
-
-//     let queue = client.queue.get(message.guild.id)
-//     if (queue) {
-//         try {
-//             if (!queue.connection.channel)
-//                 return message.channel.send(`:x: ${client.user.tag} is not in a voice channel.\n${docs.music}/disconnect`)
-//         } catch {
-//             return message.channel.send(`:x: Something happened when attempting to disconnect....\n${docs.music}/disconnect`)
-//         }
-//         client.queue.delete(message.guild.id)
-//         await channel.leave();
-//     }
-
-
-//     code = code.replaceLast(`$disconnect`, "")
-
-//     return {
-//         code: code
-//     }
-// }
-// module.exports = disconnect;
