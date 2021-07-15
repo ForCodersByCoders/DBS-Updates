@@ -1,4 +1,4 @@
-const uppercaseCount = (client, message, args, name, code) => {
+const uppercaseCount = async (client, message, args, name, code) => {
     let r = code.split("$uppercaseCount[").length - 1
     let inside = code.split("$uppercaseCount[")[r].split("]")[0]
 
