@@ -11,15 +11,18 @@ const member = async (client, message, args, name, code) => {
 
     let [userID, guildID, option] = inside.split(";")
 
-    let member = await client.users.fetch(userID ? userID : message.author.id).catch(err => { })
+    let member = await client.users.fetch(userID ? userID : message.author.id).catch(err => undefined)
     let guild = (client.guilds.cache.get(guildID ? guildID : message.guild.id))
 
     if (!member) return message.channel.send(`:x: Invalid user ID in 1st field of \`$member[${inside}]\`.\n${docs.compacts}/member`)
     if (!guild) return message.channel.send(`:x: Invalid guild ID in 2nd field of \`$member[${inside}]\`.\n${docs.compacts}/member`)
 
-    let m = await guild.members.fetch(member).catch(err => { })
+    let m = await guild.members.fetch(member).catch(err => undefined)
 
-    if (!m) return message.channel.send(`:x: Could not fetch member from the guild. \`$member[${inside}]\`.\n${docs.compacts}/member`)
+    if (option === "exists") return {
+        code: code.replaceLast(`$member[${inside}]`, m !== undefined)
+    }
+
 
     /* Returns the date and time the member boosted the guild*/
     let boostedat = moment(m.premiumSince).format("LLLL");
@@ -37,6 +40,7 @@ const member = async (client, message, args, name, code) => {
         if (x[1] > 0 && y < 4) return `${x[1]} ${x[0]}`
     }).filter(x => x).join(", ");
 
+
     if (!option) return message.channel.send(`:x: Missing option in 3rd field of \`$member[${inside}]\`.`)
     if (![ //18 options
         "nickname",
@@ -47,14 +51,14 @@ const member = async (client, message, args, name, code) => {
         "isbannable",
         "isboosting",
         "iskickable",
-        "isinguild",
+        "exists",
         "hexcolor",
         "guildid",
         "guildname",
         "isbotabovemember",
-        "boostingsince",
-        "boostedat",
-        "jointimestamp",
+        "booststamp",
+        "boostdate",
+        "joinstamp",
         "joindate",
         "presence",
         "boostcount"
@@ -75,7 +79,7 @@ const member = async (client, message, args, name, code) => {
             break;
         case "iskickable": option = m.kickable
             break;
-        case "isinguild":
+        case "exists":
             option = m.deleted
             if (option === false) {
                 option = "true"
@@ -91,22 +95,22 @@ const member = async (client, message, args, name, code) => {
             break;
         case "isbotabovemember": option = m.manageable
             break;
-        case "boostingsince": option = boostingTimestamp
+        case "booststamp": option = boostingTimestamp
             if (boostedat === "Invalid date") {
                 option = "notboosting"
             }
             break;
-        case "boostedat": option = boostedat
+        case "boostdate": option = boostedat
             if (boostedat === "Invalid date") {
                 option = "notboosting"
             }
             break;
-        case "boostcount": option = m.premiumSubscriptionCount
+        case "boostcount": option = (m.premiumSubscriptionCount ? m.premiumSubscriptionCount : "0")
             break;
         case "isboosting": if (m.premiumSinceTimestamp === null || m.premiumSinceTimestamp === undefined) option = "false"
         else option = "true"
             break;
-        case "jointimestamp": option = joinedTimestamp
+        case "joinstamp": option = joinedTimestamp
             break;
         case "joindate": option = joinedAt
             break;
