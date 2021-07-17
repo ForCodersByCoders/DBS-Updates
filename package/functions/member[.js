@@ -27,24 +27,24 @@ const member = async (client, message, args, name, code) => {
 
 
     /* Returns the date and time the member boosted the guild*/
-    let boostedat = moment(m.premiumSince).format("LLLL")
+    let boostdate = moment(m.premiumSince).format("LLLL")
 
     /* Returns how long ago the member boosted */
-    let boostingTimestamp = Object.entries(ms(Date.now() - m.premiumSinceTimestamp)).map((x, y) => {
+    let booststamp = Object.entries(ms(Date.now() - m.premiumSinceTimestamp)).map((x, y) => {
         if (x[1] > 0 && y < 4) return `${x[1]} ${x[0]}`
     }).filter(x => x).join(", ");
 
     /* Returns the date and time the member joined the guild */
-    let joinedAt = moment(m.joinedAt).format("LLLL");
+    let joindate = moment(m.joindate).format("LLLL");
 
     /* Returns how long ago the member joined the guild */
-    let joinedTimestamp = Object.entries(ms(Date.now() - m.joinedTimestamp)).map((x, y) => {
+    let joinstamp = Object.entries(ms(Date.now() - m.joinstamp)).map((x, y) => {
         if (x[1] > 0 && y < 4) return `${x[1]} ${x[0]}`
     }).filter(x => x).join(", ");
 
 
     if (!option) return message.channel.send(`:x: Missing option in 3rd field of \`$member[${inside}]\`.`)
-    if (![ //18 options
+    if (![ //19 options
         "nickname",
         "id",
         "mention",
@@ -97,13 +97,13 @@ const member = async (client, message, args, name, code) => {
             break;
         case "isbotabovemember": option = m.manageable
             break;
-        case "booststamp": option = boostingTimestamp
-            if (boostedat === "Invalid date") {
+        case "booststamp": option = booststamp
+            if (boostdate === "Invalid date") {
                 option = "notboosting"
             }
             break;
-        case "boostdate": option = boostedat
-            if (boostedat === "Invalid date") {
+        case "boostdate": option = boostdate
+            if (boostdate === "Invalid date") {
                 option = "notboosting"
             }
             break;
@@ -112,9 +112,9 @@ const member = async (client, message, args, name, code) => {
         case "isboosting": if (m.premiumSinceTimestamp === null || m.premiumSinceTimestamp === undefined) option = "false"
         else option = "true"
             break;
-        case "joinstamp": option = joinedTimestamp
+        case "joinstamp": option = joinstamp
             break;
-        case "joindate": option = joinedAt
+        case "joindate": option = joindate
             break;
         case "presence":
             let platform = m.presence.clientStatus
