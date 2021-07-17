@@ -44,7 +44,7 @@ const member = async (client, message, args, name, code) => {
 
 
     if (!option) return message.channel.send(`:x: Missing option in 3rd field of \`$member[${inside}]\`.`)
-    if (![ //19 options
+    if (![ //20 options
         "nickname",
         "id",
         "mention",
@@ -63,7 +63,8 @@ const member = async (client, message, args, name, code) => {
         "joinstamp",
         "joindate",
         "presence",
-        "boostcount"
+        "boostcount",
+        "tag"
     ].includes(option)) return message.channel.send(`:x: Invalid option in 3rd field of \`$member[${inside}]\`.`)
 
     switch (option) {
@@ -74,6 +75,8 @@ const member = async (client, message, args, name, code) => {
         case "mention": option = m.toString(m.id)
             break;
         case "username": option = m.user.username
+            break;
+        case "tag": option = m.user.tag
             break;
         case "rolecount": option = m.roles.cache.size - 1
             break;
