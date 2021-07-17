@@ -19,13 +19,15 @@ const member = async (client, message, args, name, code) => {
 
     let m = await guild.members.fetch(member).catch(err => undefined)
 
+    if (!m && (option !== "exists")) return message.channel.send(`:x: Could not fetch member from the guild. \`$member[${inside}]\`.\n${docs.compacts}/member\n**Catch with the \`exists\` option!**`)
+
     if (option === "exists") return {
         code: code.replaceLast(`$member[${inside}]`, m !== undefined)
     }
 
 
     /* Returns the date and time the member boosted the guild*/
-    let boostedat = moment(m.premiumSince).format("LLLL");
+    let boostedat = moment(m.premiumSince).format("LLLL")
 
     /* Returns how long ago the member boosted */
     let boostingTimestamp = Object.entries(ms(Date.now() - m.premiumSinceTimestamp)).map((x, y) => {
