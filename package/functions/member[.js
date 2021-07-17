@@ -56,7 +56,8 @@ const member = async (client, message, args, name, code) => {
         "boostedat",
         "jointimestamp",
         "joindate",
-        "presence"
+        "presence",
+        "boostcount"
     ].includes(option)) return message.channel.send(`:x: Invalid option in 3rd field of \`$member[${inside}]\`.`)
 
     switch (option) {
@@ -99,6 +100,8 @@ const member = async (client, message, args, name, code) => {
             if (boostedat === "Invalid date") {
                 option = "notboosting"
             }
+            break;
+        case "boostcount": option = m.premiumSubscriptionCount
             break;
         case "isboosting": if (m.premiumSinceTimestamp === null || m.premiumSinceTimestamp === undefined) option = "false"
         else option = "true"
